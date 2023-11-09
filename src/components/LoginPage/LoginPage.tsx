@@ -11,19 +11,16 @@ const LoginPage = () => {
     const [pass, setPass] = useState<string>('')
     const [isResetForm, setIsResetForm] = useState<boolean>(false)
 
-    // const clickHendler: () => void = () => {
-    //     console.log(text, pass)
-    //     if (!text) setText('')
-    //     setPass('')
-    //     // setIsAuth(true)
-    // }
-
     const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(text, pass)
-        setText('')
-        setPass('')
-        setIsResetForm(true)
+        if (text && pass) {
+            setText('')
+            setPass('')
+            setIsResetForm(false)
+            console.log(text, pass)
+        } else {
+            setIsResetForm(true)
+        }
     }
     return (
         <div className='flex h-[100dvh] items-center justify-center'>
