@@ -4,27 +4,35 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import { useState } from 'react'
 import { COLORS } from '../../helpers/constants'
+import { useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
     enum ID {
-        TIMER = 'TIMER',
-        WEIGHT = 'WEIGHT',
-        FITNESS = 'FITNESS'
+        TIMER = 'timer',
+        WEIGHT = 'weight',
+        TRAINING = 'training'
     }
     const [activeButton, setActiveButton] = useState<string>(ID.TIMER)
     const isActiveButton: (id: string) => { color: string } = id =>
         activeButton === id ? { color: COLORS.BLUE } : { color: COLORS.GREY }
 
+    const navigate = useNavigate()
+
+    const onClickButton: (id: string) => void = id => {
+        setActiveButton(id)
+        navigate(id)
+    }
+
     return (
         <div className='bg-gray-700 absolute bottom-0 w-full h-[50px] flex justify-evenly'>
-            <IconButton id={ID.TIMER} onClick={() => setActiveButton(ID.TIMER)} size='large'>
+            <IconButton id={ID.TIMER} onClick={() => onClickButton(ID.TIMER)} size='large'>
                 <AccessTimeIcon fontSize='large' sx={isActiveButton(ID.TIMER)} />
             </IconButton>
-            <IconButton id={ID.WEIGHT} onClick={() => setActiveButton(ID.WEIGHT)} size='large'>
+            <IconButton id={ID.WEIGHT} onClick={() => onClickButton(ID.WEIGHT)} size='large'>
                 <MonitorWeightIcon fontSize='large' sx={isActiveButton(ID.WEIGHT)} />
             </IconButton>
-            <IconButton id={ID.FITNESS} onClick={() => setActiveButton(ID.FITNESS)} size='large'>
-                <FitnessCenterIcon fontSize='large' sx={isActiveButton(ID.FITNESS)} />
+            <IconButton id={ID.TRAINING} onClick={() => onClickButton(ID.TRAINING)} size='large'>
+                <FitnessCenterIcon fontSize='large' sx={isActiveButton(ID.TRAINING)} />
             </IconButton>
         </div>
     )

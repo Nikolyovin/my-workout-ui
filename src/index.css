@@ -2,11 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* убираем выделение всех объектов хрома */
+
+*:focus {
+    outline: none;
+}
+
 p,
 h1 {
-  color: white;
+    color: white;
 }
 
 body {
-  background-color: #020403;
+    background-color: #020403;
+    font-family: 'Playfair Display', serif;
+    font-family: 'Ubuntu', sans-serif;
 }
