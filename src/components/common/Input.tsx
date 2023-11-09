@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, FC, SetStateAction, useState } from 'react'
+import { ChangeEvent, Dispatch, FC, SetStateAction } from 'react'
 
 type PropsType = {
     type: string

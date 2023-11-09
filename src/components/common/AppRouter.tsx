@@ -4,6 +4,7 @@ import TimerPage from '../TimerPage/TimerPage'
 import WeightPage from '../WeightPage/WeightPage'
 import TrainingPage from '../TrainingPage/TrainingPage'
 import LoginPage from '../LoginPage/LoginPage'
+import RegistrationPage from '../RegisrationPage/RegistrationPage'
 
 const AppRouter = () => {
     const { isAuth } = useAppSelector(state => state.auth)
@@ -17,6 +18,7 @@ const AppRouter = () => {
     ) : (
         <Routes>
             <Route path='/login' Component={LoginPage} />
+            <Route path='/registration' Component={RegistrationPage} />
             <Route path='/*' element={<Navigate to='/login' replace />} />
         </Routes>
     )
