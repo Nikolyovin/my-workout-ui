@@ -6,13 +6,13 @@ const IS_AUTH = 'isAuth'
 interface InitialStateType {
     isAuth: boolean
     isLoading: boolean
-    // errorLogin: string
+    errorLogin: string
 }
 
 const initialState: InitialStateType = {
     isAuth: JSON.parse(localStorage.getItem(IS_AUTH) ?? '[]'),
-    isLoading: false
-    // errorLogin: ''
+    isLoading: false,
+    errorLogin: ''
 }
 
 export const authSlice = createSlice({
@@ -23,12 +23,29 @@ export const authSlice = createSlice({
             state.isAuth = action.payload
             localStorage.setItem(IS_AUTH, JSON.stringify(state.isAuth))
         },
-        getLoginFetch(state, action: PayloadAction<ILoginData>) {
+        loginFetch(state, _action: PayloadAction<ILoginData>) {
             state.isLoading = true
-            console.log('slice')
         },
-        getLoginSuccess(state) {
+        loginSuccess(state) {
+            state.errorLogin = ''
             state.isLoading = false
+            state.isAuth = true
+            localStorage.setItem(IS_AUTH, JSON.stringify(true))
+        },
+        setErrorLogin(state, action: PayloadAction<string>) {
+            state.errorLogin = action.payload
+            state.isLoading = false
+        },
+        logout(state) {
+            localStorage.removeItem('token')
+            state.isAuth = false
+            localStorage.setItem(IS_AUTH, JSON.stringify(false))
+        },
+        registrationFetch(state) {
+            state.isLoading = true
+        },
+        registrationSuccess(state) {
+            state.isLoading = true
         }
     }
 })

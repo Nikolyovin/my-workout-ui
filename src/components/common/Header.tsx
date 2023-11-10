@@ -7,16 +7,18 @@ const Header = () => {
     const { isAuth } = useAppSelector(state => state.auth)
     console.log('isAuth', isAuth)
 
-    const { setIsAuth } = useActions()
+    const { logout } = useActions()
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
     const open = Boolean(anchorEl)
+
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget)
     }
     const handleClose = () => {
         setAnchorEl(null)
-        setIsAuth(false)
+        logout()
     }
+
     return (
         <div className=' py-4 px-5 flex justify-between items-center'>
             <p className='text-4xl  text-[#efefef]'>my-workout</p>

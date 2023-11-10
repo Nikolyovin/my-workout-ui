@@ -3,13 +3,16 @@ import Button from '@mui/material/Button'
 import { useState, FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useActions } from '../../../hooks/action'
+import { useAppSelector } from '../../../hooks/redux'
+import { CircularProgress } from '@mui/material'
 
 const LoginForm = () => {
     const [login, setLogin] = useState<string>('')
     const [pass, setPass] = useState<string>('')
     const [isResetForm, setIsResetForm] = useState<boolean>(false)
+    const { errorLogin, isLoading } = useAppSelector(state => state.auth)
     const navigate = useNavigate()
-    const { getLoginFetch } = useActions()
+    const { loginFetch, setErrorLogin } = useActions()
 
     const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -17,8 +20,7 @@ const LoginForm = () => {
             setLogin('')
             setPass('')
             setIsResetForm(false)
-            getLoginFetch({ login, password: pass })
-            // console.log(login, pass)
+            loginFetch({ username: login, password: pass })
         } else {
             setIsResetForm(true)
         }
@@ -29,8 +31,13 @@ const LoginForm = () => {
     }
 
     return (
-        <form onSubmit={handleFormSubmit} className='p-[32px] bg-[#616161] rounded-lg w-[300px] flex flex-col'>
+        <form
+            onClick={() => setErrorLogin('')}
+            onSubmit={handleFormSubmit}
+            className='p-[32px] bg-[#616161] rounded-lg w-[300px] flex flex-col'
+        >
             <h1 className='text-2xl text-center mb-5'>Войти</h1>
+            {errorLogin && <span className='text-red-600 text-center text-sm'>{errorLogin}</span>}
 
             <Input
                 isResetForm={isResetForm}
@@ -48,17 +55,28 @@ const LoginForm = () => {
                 placeholder='Пароль'
                 value={pass}
             />
-            <Button
-                type='submit'
-                // onClick={() => clickHendler()}
-                variant='contained'
-                sx={{ fontFamily: 'inherit', mb: '10px' }}
-            >
+            {!isLoading ? (
+                <Button type='submit' variant='contained' sx={{ fontFamily: 'inherit', mb: '10px' }}>
+                    Вход
+                </Button>
+            ) : (
+                <div className='flex justify-center'>
+                    <CircularProgress />
+                </div>
+            )}
+            {/* <LoadingButton size='small' loading={isLoading} variant='outlined'>
                 Вход
-            </Button>
-            <Button onClick={pushToRegistration} size='small' variant='text' sx={{ fontFamily: 'inherit', mb: '10px' }}>
-                Регистрация
-            </Button>
+            </LoadingButton> */}
+            {!isLoading && (
+                <Button
+                    onClick={pushToRegistration}
+                    size='small'
+                    variant='text'
+                    sx={{ fontFamily: 'inherit', mb: '10px' }}
+                >
+                    Регистрация
+                </Button>
+            )}
         </form>
     )
 }
