@@ -1,15 +1,21 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { AxiosResponse } from 'axios'
-import { ILoginData } from '../../models/uiModels'
-import { IErrorResponse, ILoginResponse } from '../../models/apiModels'
+import { ILoginData, IRegistrationData } from '../../models/uiModels'
+import {
+    ILoginErrorResponse,
+    ILoginResponse,
+    IRegistrationErrorResponse,
+    IRegistrationResponse
+} from '../../models/apiModels'
 import AuthService from '../../services/AuthService'
 import { authActions } from './auth.slice'
 
 function* workLoginFetch({ payload }: PayloadAction<ILoginData>): any {
     try {
-        const authData: AxiosResponse<ILoginResponse | IErrorResponse> = yield call(() => AuthService.Login(payload))
-        console.log('authData', authData)
+        const authData: AxiosResponse<ILoginResponse | ILoginErrorResponse> = yield call(() =>
+            AuthService.Login(payload)
+        )
         if (authData && 'token' in authData.data) {
             localStorage.setItem('token', authData.data.token)
             yield put(authActions.loginSuccess())
@@ -21,9 +27,27 @@ function* workLoginFetch({ payload }: PayloadAction<ILoginData>): any {
     }
 }
 
+function* workRegistrationFetch({ payload }: PayloadAction<IRegistrationData>): any {
+    try {
+        const authData: AxiosResponse<IRegistrationResponse | IRegistrationErrorResponse> = yield call(() =>
+            AuthService.registration(payload)
+        )
+        console.log('authData', authData)
+        if (authData.status === 200) {
+            if ('success' in authData.data) yield put(authActions.registrationSuccess(authData.data.success))
+        } else if ('message' in authData.data) {
+            let Error = authData.data.message
+            authData.data.errors?.errors.map(item => (Error += ` ${item.msg}`))
+            yield put(authActions.setErrorRegistration(Error))
+        }
+    } catch (error) {
+        throw error
+    }
+}
+
 function* authSaga() {
     yield takeLatest('auth/loginFetch', workLoginFetch)
-    yield takeLatest('auth/loginFetch', workLoginFetch)
+    yield takeLatest('auth/registrationFetch', workRegistrationFetch)
 }
 
 export default authSaga

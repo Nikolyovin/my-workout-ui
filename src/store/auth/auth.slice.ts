@@ -1,18 +1,25 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { ILoginData } from '../../models/uiModels'
+import { ILoginData, IRegistrationData } from '../../models/uiModels'
 
 const IS_AUTH = 'isAuth'
+const ACTIVE_USER = 'ACTIVE_USER'
 
 interface InitialStateType {
     isAuth: boolean
     isLoading: boolean
     errorLogin: string
+    errorRegistration: string
+    successRegistration: string
+    activeUser: string
 }
 
 const initialState: InitialStateType = {
     isAuth: JSON.parse(localStorage.getItem(IS_AUTH) ?? '[]'),
     isLoading: false,
-    errorLogin: ''
+    errorLogin: '',
+    errorRegistration: '',
+    successRegistration: '',
+    activeUser: JSON.parse(localStorage.getItem(ACTIVE_USER) ?? '[]')
 }
 
 export const authSlice = createSlice({
@@ -41,11 +48,19 @@ export const authSlice = createSlice({
             state.isAuth = false
             localStorage.setItem(IS_AUTH, JSON.stringify(false))
         },
-        registrationFetch(state) {
+        registrationFetch(state, _action: PayloadAction<IRegistrationData>) {
             state.isLoading = true
         },
-        registrationSuccess(state) {
+        registrationSuccess(state, action: PayloadAction<string>) {
             state.isLoading = true
+            state.successRegistration = action.payload
+        },
+        setErrorRegistration(state, action: PayloadAction<string>) {
+            state.errorRegistration = action.payload
+            state.isLoading = false
+        },
+        setSuccessRegistration(state, action: PayloadAction<string>) {
+            state.successRegistration = action.payload
         }
     }
 })
