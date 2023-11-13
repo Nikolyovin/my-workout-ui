@@ -10,6 +10,7 @@ import {
 } from '../../models/apiModels'
 import AuthService from '../../services/AuthService'
 import { authActions } from './auth.slice'
+import { ACTIVE_USER } from '../../helpers/constants'
 
 function* workLoginFetch({ payload }: PayloadAction<ILoginData>): any {
     try {
@@ -18,6 +19,7 @@ function* workLoginFetch({ payload }: PayloadAction<ILoginData>): any {
         )
         if (authData && 'token' in authData.data) {
             localStorage.setItem('token', authData.data.token)
+            localStorage.setItem(ACTIVE_USER, authData.data.user)
             yield put(authActions.loginSuccess())
         } else if ('message' in authData.data) {
             yield put(authActions.setErrorLogin(authData.data.message))

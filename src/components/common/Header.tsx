@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks/redux'
 import { useActions } from '../../hooks/action'
 
 const Header = () => {
-    const { isAuth } = useAppSelector(state => state.auth)
+    const { isAuth, activeUser } = useAppSelector(state => state.auth)
     console.log('isAuth', isAuth)
 
     const { logout } = useActions()
@@ -14,10 +14,9 @@ const Header = () => {
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget)
     }
-    const handleClose = () => {
-        setAnchorEl(null)
-        logout()
-    }
+    const handleClose = () => setAnchorEl(null)
+
+    const handleLogout: () => void = () => logout()
 
     return (
         <div className=' py-4 px-5 flex justify-between items-center'>
@@ -30,7 +29,7 @@ const Header = () => {
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
             >
-                <Avatar sx={{ bgcolor: '#9e9e9e' }}>N</Avatar>
+                <Avatar sx={{ bgcolor: '#9e9e9e' }}>{activeUser[0]}</Avatar>
             </Button>
 
             <Menu
@@ -42,7 +41,7 @@ const Header = () => {
                     'aria-labelledby': 'basic-button'
                 }}
             >
-                <MenuItem onClick={handleClose}>Выйти</MenuItem>
+                <MenuItem onClick={handleLogout}>Выйти</MenuItem>
             </Menu>
         </div>
     )

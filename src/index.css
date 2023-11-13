@@ -18,3 +18,9 @@ body {
     font-family: 'Playfair Display', serif;
     font-family: 'Ubuntu', sans-serif;
 }
+
+@media (max-height: 668px) {
+    .button-play_wrap {
+        margin-top: 10%;
+    }
+}

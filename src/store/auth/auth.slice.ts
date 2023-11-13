@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { ILoginData, IRegistrationData } from '../../models/uiModels'
+import { ACTIVE_USER } from '../../helpers/constants'
 
 const IS_AUTH = 'isAuth'
-const ACTIVE_USER = 'ACTIVE_USER'
 
 interface InitialStateType {
     isAuth: boolean
@@ -19,7 +19,7 @@ const initialState: InitialStateType = {
     errorLogin: '',
     errorRegistration: '',
     successRegistration: '',
-    activeUser: JSON.parse(localStorage.getItem(ACTIVE_USER) ?? '[]')
+    activeUser: localStorage.getItem(ACTIVE_USER) || '[]'
 }
 
 export const authSlice = createSlice({
@@ -47,6 +47,7 @@ export const authSlice = createSlice({
             localStorage.removeItem('token')
             state.isAuth = false
             localStorage.setItem(IS_AUTH, JSON.stringify(false))
+            localStorage.removeItem(ACTIVE_USER)
         },
         registrationFetch(state, _action: PayloadAction<IRegistrationData>) {
             state.isLoading = true

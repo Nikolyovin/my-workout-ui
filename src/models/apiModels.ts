@@ -1,5 +1,6 @@
 export interface ILoginResponse {
     token: string
+    user: string
 }
 
 export interface ILoginErrorResponse {
