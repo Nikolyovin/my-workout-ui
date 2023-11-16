@@ -38,7 +38,6 @@ const TimerButtons: FC<IProps> = ({ setIsShowSetting }) => {
                         // disableRipple={false}
                         onClick={handlePlay}
                         size='large'
-                        color='secondary'
                         sx={{ background: COLORS.GREY }}
                     >
                         <PlayArrowIcon fontSize='large' sx={{ color: COLORS.DARK_GREY }} />
@@ -50,7 +49,6 @@ const TimerButtons: FC<IProps> = ({ setIsShowSetting }) => {
                         // disableRipple={false}
                         onClick={handlePause}
                         size='large'
-                        color='success'
                         sx={{ background: COLORS.GREY }}
                     >
                         <PauseIcon fontSize='large' sx={{ color: COLORS.DARK_GREY }} />
@@ -63,7 +61,6 @@ const TimerButtons: FC<IProps> = ({ setIsShowSetting }) => {
                         onClick={handleStop}
                         size='large'
                         sx={{ background: COLORS.GREY, ml: '20px' }}
-                        color='primary'
                     >
                         <StopIcon fontSize='large' sx={{ color: COLORS.DARK_GREY }} />
                     </IconButton>
