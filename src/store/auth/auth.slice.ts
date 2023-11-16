@@ -4,6 +4,13 @@ import { ACTIVE_USER } from '../../helpers/constants'
 
 const IS_AUTH = 'isAuth'
 
+const getFromLocalStorage = async (key: string) => {
+    if (!key || typeof window === 'undefined') {
+        return ''
+    }
+    return localStorage.getItem(key)
+}
+
 interface InitialStateType {
     isAuth: boolean
     isLoading: boolean
@@ -14,12 +21,12 @@ interface InitialStateType {
 }
 
 const initialState: InitialStateType = {
-    isAuth: JSON.parse(localStorage.getItem(IS_AUTH) ?? '[]'),
+    isAuth: JSON.parse(localStorage.getItem(IS_AUTH) ?? 'false'),
     isLoading: false,
     errorLogin: '',
     errorRegistration: '',
     successRegistration: '',
-    activeUser: localStorage.getItem(ACTIVE_USER) || '[]'
+    activeUser: (await getFromLocalStorage(ACTIVE_USER)) || ''
 }
 
 export const authSlice = createSlice({
@@ -29,6 +36,9 @@ export const authSlice = createSlice({
         setIsAuth(state, action: PayloadAction<boolean>) {
             state.isAuth = action.payload
             localStorage.setItem(IS_AUTH, JSON.stringify(state.isAuth))
+        },
+        setIsActiveUser(state, action: PayloadAction<string>) {
+            state.activeUser = action.payload
         },
         loginFetch(state, _action: PayloadAction<ILoginData>) {
             state.isLoading = true
@@ -47,6 +57,8 @@ export const authSlice = createSlice({
             localStorage.removeItem('token')
             state.isAuth = false
             localStorage.setItem(IS_AUTH, JSON.stringify(false))
+            state.activeUser = ''
+            // localStorage.setItem(ACTIVE_USER, JSON.stringify(''))
             localStorage.removeItem(ACTIVE_USER)
         },
         registrationFetch(state, _action: PayloadAction<IRegistrationData>) {

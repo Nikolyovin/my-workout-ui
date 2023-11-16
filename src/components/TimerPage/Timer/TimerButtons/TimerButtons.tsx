@@ -23,7 +23,7 @@ const TimerButtons: FC<IProps> = ({ setIsShowSetting }) => {
     }
 
     const handleStop: () => void = () => {
-        setStatusTimer(STATUS.PAUSE)
+        setStatusTimer(STATUS.STOP)
     }
 
     const handlePause: () => void = () => {
@@ -32,25 +32,42 @@ const TimerButtons: FC<IProps> = ({ setIsShowSetting }) => {
 
     return (
         <div className='flex flex-col items-center'>
-            <div className='button-play_wrap mt-[35%]'>
-                <IconButton disableRipple={true} onClick={handlePause} size='large' sx={{ background: COLORS.GREY }}>
-                    <PauseIcon fontSize='large' sx={{ color: COLORS.DARK_GREY }} />
-                </IconButton>
-
-                <IconButton disableRipple={true} onClick={handlePlay} size='large' sx={{ background: COLORS.GREY }}>
-                    <PlayArrowIcon fontSize='large' sx={{ color: COLORS.DARK_GREY }} />
-                </IconButton>
-
-                {
+            <div className='button-play_wrap mt-[35%] '>
+                {statusTimer !== STATUS.PLAY && (
                     <IconButton
-                        disableRipple={true}
+                        // disableRipple={false}
+                        onClick={handlePlay}
+                        size='large'
+                        color='secondary'
+                        sx={{ background: COLORS.GREY }}
+                    >
+                        <PlayArrowIcon fontSize='large' sx={{ color: COLORS.DARK_GREY }} />
+                    </IconButton>
+                )}
+
+                {statusTimer === STATUS.PLAY && (
+                    <IconButton
+                        // disableRipple={false}
+                        onClick={handlePause}
+                        size='large'
+                        color='success'
+                        sx={{ background: COLORS.GREY }}
+                    >
+                        <PauseIcon fontSize='large' sx={{ color: COLORS.DARK_GREY }} />
+                    </IconButton>
+                )}
+
+                {statusTimer !== STATUS.STOP && (
+                    <IconButton
+                        // disableRipple={false}
                         onClick={handleStop}
                         size='large'
                         sx={{ background: COLORS.GREY, ml: '20px' }}
+                        color='primary'
                     >
                         <StopIcon fontSize='large' sx={{ color: COLORS.DARK_GREY }} />
                     </IconButton>
-                }
+                )}
             </div>
             <div className='absolute bottom-[75px]'>
                 <Button

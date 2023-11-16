@@ -4,8 +4,7 @@ import { useAppSelector } from '../../hooks/redux'
 import { useActions } from '../../hooks/action'
 
 const Header = () => {
-    const { isAuth, activeUser } = useAppSelector(state => state.auth)
-    console.log('isAuth', isAuth)
+    const { activeUser } = useAppSelector(state => state.auth)
 
     const { logout } = useActions()
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)

@@ -20,6 +20,8 @@ function* workLoginFetch({ payload }: PayloadAction<ILoginData>): any {
         if (authData && 'token' in authData.data) {
             localStorage.setItem('token', authData.data.token)
             localStorage.setItem(ACTIVE_USER, authData.data.user)
+
+            yield put(authActions.setIsActiveUser(authData.data.user))
             yield put(authActions.loginSuccess())
         } else if ('message' in authData.data) {
             yield put(authActions.setErrorLogin(authData.data.message))
@@ -34,7 +36,6 @@ function* workRegistrationFetch({ payload }: PayloadAction<IRegistrationData>): 
         const authData: AxiosResponse<IRegistrationResponse | IRegistrationErrorResponse> = yield call(() =>
             AuthService.registration(payload)
         )
-        console.log('authData', authData)
         if (authData.status === 200) {
             if ('success' in authData.data) yield put(authActions.registrationSuccess(authData.data.success))
         } else if ('message' in authData.data) {
