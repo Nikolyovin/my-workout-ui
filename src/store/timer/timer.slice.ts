@@ -5,12 +5,14 @@ interface InitialStateType {
     workTime: number
     breakTime: number
     statusTimer: STATUS.PAUSE | STATUS.PLAY | STATUS.STOP
+    isRunSound: boolean
 }
 
 const initialState: InitialStateType = {
     workTime: 30,
     breakTime: 5,
-    statusTimer: STATUS.STOP
+    statusTimer: STATUS.STOP,
+    isRunSound: false
 }
 
 export const timerSlice = createSlice({
@@ -27,6 +29,9 @@ export const timerSlice = createSlice({
         },
         setStatusTimer(state, action: PayloadAction<STATUS.PAUSE | STATUS.PLAY | STATUS.STOP>) {
             state.statusTimer = action.payload
+        },
+        setIsRunSound(state, action: PayloadAction<boolean>) {
+            state.isRunSound = action.payload
         }
     }
 })

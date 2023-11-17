@@ -5,6 +5,9 @@ import { Dispatch, FC, SetStateAction } from 'react'
 import TimerButtons from './TimerButtons/TimerButtons'
 import { useState, useEffect, useRef } from 'react'
 import { useAppSelector } from '../../../hooks/redux'
+import { convertTime } from '../../../helpers/utils'
+import TimerSound from './TimerSound/TimerSound'
+import { useActions } from '../../../hooks/action'
 
 interface IProps {
     setIsShowSetting: Dispatch<SetStateAction<boolean>>
@@ -16,6 +19,7 @@ const Timer: FC<IProps> = ({ setIsShowSetting }) => {
     const { breakTime, workTime, statusTimer } = useAppSelector(state => state.timer)
     const [secondsLeft, setSecondsLeft] = useState(0)
     const [mode, setMode] = useState<'work' | 'break'>('work')
+    const { setIsRunSound } = useActions()
 
     //нужно для сетинтервала, ему нужны ссылки
     const secondLeftRef = useRef(secondsLeft)
@@ -24,8 +28,6 @@ const Timer: FC<IProps> = ({ setIsShowSetting }) => {
     console.log('statusTimerRef', statusTimerRef.current)
 
     const initTimer = () => {
-        // setSecondsLeft(workTime * 60)
-        // secondLeftRef.current = workTime * 60
         secondLeftRef.current = workTime
         setSecondsLeft(secondLeftRef.current)
     }
@@ -34,7 +36,6 @@ const Timer: FC<IProps> = ({ setIsShowSetting }) => {
     const switchMode = () => {
         const nextMode = modeRef.current === 'work' ? 'break' : 'work'
         const nextSeconds = nextMode === 'work' ? workTime : breakTime
-        // const nextSeconds = (nextMode === 'work' ? workTime : breakTime) * 60
         setMode(nextMode)
         modeRef.current = nextMode
         setSecondsLeft(nextSeconds)
@@ -43,6 +44,7 @@ const Timer: FC<IProps> = ({ setIsShowSetting }) => {
 
     const tick = () => {
         secondLeftRef.current-- // secondsLeft -1
+        secondLeftRef.current === 0 && setIsRunSound(true)
         setSecondsLeft(secondLeftRef.current)
     }
 
@@ -50,10 +52,6 @@ const Timer: FC<IProps> = ({ setIsShowSetting }) => {
         initTimer()
 
         const interval = setInterval(() => {
-            // if (statusTimerRef.current === STATUS.STOP) {
-            //     initTimer()
-            //     return
-            // }
             if (statusTimerRef.current !== STATUS.PLAY) {
                 return
             }
@@ -69,20 +67,13 @@ const Timer: FC<IProps> = ({ setIsShowSetting }) => {
     }, [statusTimer === STATUS.STOP])
 
     const totalSeconds = mode === 'work' ? workTime : breakTime
-    // const totalSeconds = mode === 'work' ? workTime * 60 : breakTime * 60
     const percentage = Math.round((secondsLeft / totalSeconds) * 100)
-    // const minutes = Math.floor(secondsLeft)
-    // const minutes = Math.floor(secondsLeft / 60)
-    let seconds = secondsLeft.toString()
-    // let seconds = (secondsLeft % 60).toString()
-    if (+seconds < 10) seconds = '0' + seconds
 
     return (
         <div className='px-10 py-14 h-[calc(100dvh-50px-84px)]'>
             <CircularProgressbar
                 value={percentage}
-                text={`${seconds}`}
-                // text={`${minutes}:${seconds}`}
+                text={convertTime(secondsLeft)}
                 styles={buildStyles({
                     textColor: 'white',
                     pathColor: mode === 'work' ? purple : GREEN,
@@ -90,6 +81,7 @@ const Timer: FC<IProps> = ({ setIsShowSetting }) => {
                 })}
             />
             <TimerButtons statusTimerRef={statusTimerRef} setIsShowSetting={setIsShowSetting} />
+            <TimerSound setIsRunSound={setIsRunSound} />
         </div>
     )
 }

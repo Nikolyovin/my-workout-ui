@@ -1,9 +1,10 @@
-import { FC, SetStateAction, Dispatch, useState } from 'react'
+import { FC, SetStateAction, Dispatch } from 'react'
 import { Button, Slider } from '@mui/material'
 import SaveIcon from '@mui/icons-material/Save'
 import { useActions } from '../../../hooks/action'
 import { COLORS } from '../../../helpers/constants'
 import { useAppSelector } from '../../../hooks/redux'
+import { convertTime } from '../../../helpers/utils'
 
 type propsType = {
     setIsShowSetting: Dispatch<SetStateAction<boolean>>
@@ -24,9 +25,9 @@ const TimerSetting: FC<propsType> = ({ setIsShowSetting }) => {
     }
     return (
         <div className='px-10  flex flex-col items-center h-[calc(100dvh-50px-84px)]'>
-            <div className='max-w-[90%]'>
+            <div className='w-full'>
                 <label className='text-[#9e9e9e] text-lg '>
-                    work minutes: <span className='text-2xl font-bold'>{workTime}</span>
+                    Работа: <span className='text-2xl font-bold'>{convertTime(workTime)}</span>
                 </label>
                 <Slider
                     color='secondary'
@@ -37,7 +38,7 @@ const TimerSetting: FC<propsType> = ({ setIsShowSetting }) => {
                     sx={{ height: 10 }}
                 />
                 <label className='text-[#9e9e9e] text-lg'>
-                    break minutes: <span className='text-2xl font-bold'>{breakTime}</span>
+                    Отдых: <span className='text-2xl font-bold'>{convertTime(breakTime)}</span>
                 </label>
                 <Slider
                     color='success'
