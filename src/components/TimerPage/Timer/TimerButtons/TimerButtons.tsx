@@ -1,22 +1,21 @@
-import { COLORS } from '../../../../helpers/constants'
+import { COLORS, STATUS } from '../../../../helpers/constants'
 import { Button, IconButton } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { Dispatch, FC, SetStateAction } from 'react'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import StopIcon from '@mui/icons-material/Stop'
 import PauseIcon from '@mui/icons-material/Pause'
+import { useAppSelector } from '../../../../hooks/redux'
+import { useActions } from '../../../../hooks/action'
 
 interface IProps {
     setIsShowSetting: Dispatch<SetStateAction<boolean>>
 }
 
 const TimerButtons: FC<IProps> = ({ setIsShowSetting }) => {
-    enum STATUS {
-        PLAY = 'PLAY',
-        STOP = 'STOP',
-        PAUSE = 'PAUSE'
-    }
-    const [statusTimer, setStatusTimer] = useState(STATUS.STOP)
+    const { statusTimer } = useAppSelector(state => state.timer)
+    const { setStatusTimer } = useActions()
+    // const [statusTimer, setStatusTimer] = useState(STATUS.STOP)
 
     const handlePlay: () => void = () => {
         setStatusTimer(STATUS.PLAY)
@@ -66,8 +65,9 @@ const TimerButtons: FC<IProps> = ({ setIsShowSetting }) => {
                     </IconButton>
                 )}
             </div>
-            <div className='absolute bottom-[75px]'>
+            <div className='absolute bottom-[80px]'>
                 <Button
+                    variant='contained'
                     size='medium'
                     sx={{ backgroundColor: COLORS.DARK_GREY }}
                     onClick={() => setIsShowSetting(true)}

@@ -7,3 +7,9 @@ export enum COLORS {
 export const URL_SERVER = 'http://localhost:5200/'
 
 export const ACTIVE_USER = 'ACTIVE_USER'
+
+export enum STATUS {
+    PLAY = 'PLAY',
+    STOP = 'STOP',
+    PAUSE = 'PAUSE'
+}
