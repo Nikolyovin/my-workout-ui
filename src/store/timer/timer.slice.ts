@@ -8,8 +8,8 @@ interface InitialStateType {
 }
 
 const initialState: InitialStateType = {
-    workTime: 60,
-    breakTime: 30,
+    workTime: 30,
+    breakTime: 5,
     statusTimer: STATUS.STOP
 }
 

@@ -33,7 +33,7 @@ const TimerSetting: FC<propsType> = ({ setIsShowSetting }) => {
                     value={typeof workTime === 'number' ? workTime : 0}
                     onChange={handleWorkChange}
                     aria-labelledby='input-slider'
-                    max={120}
+                    max={300}
                     sx={{ height: 10 }}
                 />
                 <label className='text-[#9e9e9e] text-lg'>
@@ -44,7 +44,7 @@ const TimerSetting: FC<propsType> = ({ setIsShowSetting }) => {
                     value={typeof breakTime === 'number' ? breakTime : 0}
                     onChange={handleBreakChange}
                     aria-labelledby='input-slider'
-                    max={30}
+                    max={120}
                     sx={{ height: 10 }}
                 />
             </div>

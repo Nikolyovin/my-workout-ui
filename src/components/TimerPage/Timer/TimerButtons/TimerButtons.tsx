@@ -1,7 +1,7 @@
 import { COLORS, STATUS } from '../../../../helpers/constants'
 import { Button, IconButton } from '@mui/material'
 import SettingsIcon from '@mui/icons-material/Settings'
-import { Dispatch, FC, SetStateAction } from 'react'
+import { Dispatch, FC, MutableRefObject, SetStateAction } from 'react'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import StopIcon from '@mui/icons-material/Stop'
 import PauseIcon from '@mui/icons-material/Pause'
@@ -10,23 +10,29 @@ import { useActions } from '../../../../hooks/action'
 
 interface IProps {
     setIsShowSetting: Dispatch<SetStateAction<boolean>>
+    // modeRef: MutableRefObject<"work" | "break">
+    statusTimerRef: MutableRefObject<STATUS.PAUSE | STATUS.PLAY | STATUS.STOP>
+    // secondLeftRef: MutableRefObject<string>
 }
 
-const TimerButtons: FC<IProps> = ({ setIsShowSetting }) => {
+const TimerButtons: FC<IProps> = ({ setIsShowSetting, statusTimerRef }) => {
     const { statusTimer } = useAppSelector(state => state.timer)
     const { setStatusTimer } = useActions()
     // const [statusTimer, setStatusTimer] = useState(STATUS.STOP)
 
     const handlePlay: () => void = () => {
         setStatusTimer(STATUS.PLAY)
+        statusTimerRef.current = STATUS.PLAY
     }
 
     const handleStop: () => void = () => {
         setStatusTimer(STATUS.STOP)
+        statusTimerRef.current = STATUS.STOP
     }
 
     const handlePause: () => void = () => {
         setStatusTimer(STATUS.PAUSE)
+        statusTimerRef.current = STATUS.PAUSE
     }
 
     return (
