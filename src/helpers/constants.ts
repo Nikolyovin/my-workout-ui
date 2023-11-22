@@ -13,3 +13,9 @@ export enum STATUS {
     STOP = 'STOP',
     PAUSE = 'PAUSE'
 }
+
+export enum TABS {
+    TIMER = 'timer',
+    WEIGHT = 'weight',
+    TRAINING = 'training'
+}

@@ -5,3 +5,10 @@ export const convertTime = (time: number) => {
 
     return `${minutes}:${seconds}`
 }
+
+export const getFromLocalStorage = async (key: string) => {
+    if (!key || typeof window === 'undefined') {
+        return ''
+    }
+    return localStorage.getItem(key)
+}

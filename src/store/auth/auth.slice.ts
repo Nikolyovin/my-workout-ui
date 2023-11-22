@@ -1,15 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { ILoginData, IRegistrationData } from '../../models/uiModels'
 import { ACTIVE_USER } from '../../helpers/constants'
+import { getFromLocalStorage } from '../../helpers/utils'
 
 const IS_AUTH = 'isAuth'
-
-const getFromLocalStorage = async (key: string) => {
-    if (!key || typeof window === 'undefined') {
-        return ''
-    }
-    return localStorage.getItem(key)
-}
 
 interface InitialStateType {
     isAuth: boolean
