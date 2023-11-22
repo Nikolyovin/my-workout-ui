@@ -1,6 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { STATUS } from '../../helpers/constants'
 
+const WORK_TIME = 'WORK_TIME'
+const BREAK_TIME = 'BREAK_TIME'
+
 interface InitialStateType {
     workTime: number
     breakTime: number
@@ -9,8 +12,8 @@ interface InitialStateType {
 }
 
 const initialState: InitialStateType = {
-    workTime: 30,
-    breakTime: 5,
+    workTime: JSON.parse(localStorage.getItem(WORK_TIME) ?? '0'),
+    breakTime: JSON.parse(localStorage.getItem(BREAK_TIME) ?? '0'),
     statusTimer: STATUS.STOP,
     isRunSound: false
 }
@@ -21,11 +24,11 @@ export const timerSlice = createSlice({
     reducers: {
         setWorkTime(state, action: PayloadAction<number>) {
             state.workTime = action.payload
-            // localStorage.setItem(IS_AUTH, JSON.stringify(state.isAuth))
+            localStorage.setItem(WORK_TIME, JSON.stringify(state.workTime))
         },
         setBreakTime(state, action: PayloadAction<number>) {
             state.breakTime = action.payload
-            // localStorage.setItem(IS_AUTH, JSON.stringify(state.isAuth))
+            localStorage.setItem(BREAK_TIME, JSON.stringify(state.breakTime))
         },
         setStatusTimer(state, action: PayloadAction<STATUS.PAUSE | STATUS.PLAY | STATUS.STOP>) {
             state.statusTimer = action.payload
