@@ -3,14 +3,27 @@ import MonitorWeightIcon from '@mui/icons-material/MonitorWeight'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import { COLORS, TABS } from '../../helpers/constants'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../hooks/redux'
 import { useActions } from '../../hooks/action'
+import { useCallback, useEffect } from 'react'
+import { TabsType } from '../../models/uiModels'
 
 const Navbar = () => {
-    // const [activeButton, setActiveButton] = useState<string>(ID.TIMER)
     const { activeTab } = useAppSelector(state => state.common)
     const { setActiveTab } = useActions()
+
+    const location = useLocation()
+    const pathname: TabsType = location.pathname.replace(/\//g, '') as TabsType
+
+    const setTabFromURL = useCallback(() => {
+        if (activeTab !== pathname) setActiveTab(pathname)
+    }, [pathname])
+
+    useEffect(() => {
+        setTabFromURL()
+    }, [setTabFromURL])
+
     const isActiveButton: (id: string) => { color: string } = id =>
         activeTab === id ? { color: COLORS.BLUE } : { color: COLORS.GREY }
 

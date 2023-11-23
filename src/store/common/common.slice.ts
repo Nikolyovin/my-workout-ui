@@ -5,7 +5,6 @@ import { TABS } from '../../helpers/constants'
 const ACTIVE_TAB = 'ACTIVE_TAB'
 
 interface InitialStateType {
-    // activeTab: TABS.TIMER | TABS.TRAINING | TABS.WEIGHT
     activeTab: string
 }
 
