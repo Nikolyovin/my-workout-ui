@@ -29,7 +29,7 @@ const Navbar = () => {
 
     const navigate = useNavigate()
 
-    const onClickButton: (id: TABS.TIMER | TABS.TRAINING | TABS.WEIGHT) => void = id => {
+    const onClickButton: (id: TabsType) => void = id => {
         setActiveTab(id)
         navigate(id)
     }

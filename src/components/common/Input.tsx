@@ -1,10 +1,10 @@
-import { ChangeEvent, Dispatch, FC, SetStateAction } from 'react'
+import { ChangeEvent, Dispatch, FC, SetStateAction, HTMLInputTypeAttribute } from 'react'
 
 type PropsType = {
-    type: string
+    type: HTMLInputTypeAttribute
     placeholder?: string
-    value?: string
-    setValue: Dispatch<SetStateAction<string>>
+    value?: string | number
+    setValue: Dispatch<SetStateAction<string>> | Dispatch<SetStateAction<number>>
     isResetForm?: boolean
     setIsResetForm?: Dispatch<SetStateAction<boolean>>
 }
