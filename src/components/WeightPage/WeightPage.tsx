@@ -26,7 +26,7 @@ const WeightPage = () => {
             <WightList />
             <Modal open={isOpen} onClose={handleClose}>
                 <Box sx={style}>
-                    <WeightForm />
+                    <WeightForm handleClose={handleClose} />
                 </Box>
             </Modal>
             <div className='absolute bottom-[60px]'>

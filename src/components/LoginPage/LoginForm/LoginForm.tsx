@@ -7,8 +7,8 @@ import { useAppSelector } from '../../../hooks/redux'
 import { CircularProgress } from '@mui/material'
 
 const LoginForm = () => {
-    const [login, setLogin] = useState<string>('')
-    const [pass, setPass] = useState<string>('')
+    const [login, setLogin] = useState<string | number>('')
+    const [pass, setPass] = useState<string | number>('')
     const [isResetForm, setIsResetForm] = useState<boolean>(false)
     const { errorLogin, isLoading } = useAppSelector(state => state.auth)
     const navigate = useNavigate()
@@ -20,7 +20,7 @@ const LoginForm = () => {
             setLogin('')
             setPass('')
             setIsResetForm(false)
-            loginFetch({ username: login, password: pass })
+            loginFetch({ username: login as string, password: pass as string })
         } else {
             setIsResetForm(true)
         }

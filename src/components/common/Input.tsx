@@ -1,17 +1,17 @@
 import { ChangeEvent, Dispatch, FC, SetStateAction, HTMLInputTypeAttribute } from 'react'
 
-type PropsType = {
+type PropsType<T> = {
     type: HTMLInputTypeAttribute
     placeholder?: string
-    value?: string | number
-    setValue: Dispatch<SetStateAction<string>> | Dispatch<SetStateAction<number>>
+    value?: T
+    setValue: Dispatch<SetStateAction<T>>
     isResetForm?: boolean
     setIsResetForm?: Dispatch<SetStateAction<boolean>>
 }
 
-const Input: FC<PropsType> = ({ type, placeholder, value, setValue, isResetForm, setIsResetForm }) => {
+const Input: FC<PropsType<string | number>> = ({ type, placeholder, value, setValue, isResetForm, setIsResetForm }) => {
     const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value)
+        setValue(e.target.value as string | number)
         setIsResetForm && setIsResetForm(false)
     }
 

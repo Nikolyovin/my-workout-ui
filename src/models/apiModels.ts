@@ -27,3 +27,13 @@ export interface IRegistrationErrorResponse {
     message: string
     errors?: IErrorsValidation
 }
+
+export interface IWeightResponse {
+    id: string
+    weight: number
+    date: Date
+}
+
+export interface IWeightErrorResponse {
+    message: string
+}

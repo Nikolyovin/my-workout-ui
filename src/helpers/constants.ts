@@ -20,3 +20,5 @@ export enum TABS {
     WEIGHT = 'weight',
     TRAINING = 'training'
 }
+
+const TOKEN = 'token'
