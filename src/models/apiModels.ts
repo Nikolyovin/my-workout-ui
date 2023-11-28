@@ -29,7 +29,7 @@ export interface IRegistrationErrorResponse {
 }
 
 export interface IWeightResponse {
-    id: string
+    _id: string
     weight: number
     date: Date
 }

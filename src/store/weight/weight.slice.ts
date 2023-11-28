@@ -15,11 +15,12 @@ export const weightSlice = createSlice({
     name: 'weight',
     initialState,
     reducers: {
-        getWeightMeasurementFetch(state, action: PayloadAction<IWeightResponse[]>) {
+        getWeightMeasurementFetch(state) {
             state.isLoading = true
         },
         getWeightMeasurementSuccess(state, action: PayloadAction<IWeightResponse[]>) {
             state.isLoading = false
+            state.weightMeasurement = action.payload
         }
     }
 })

@@ -9,7 +9,7 @@ interface InitialStateType {
 }
 
 const initialState: InitialStateType = {
-    activeTab: JSON.parse(localStorage.getItem(ACTIVE_TAB) ?? '') || TABS.TIMER
+    activeTab: JSON.parse(localStorage.getItem(ACTIVE_TAB) ?? '[]') || TABS.TIMER
 }
 
 export const commonSlice = createSlice({
